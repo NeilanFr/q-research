@@ -1,0 +1,32 @@
+# secrets / broker config
+config/private_paper.json
+state/private/
+*.log
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# local/runtime state
+state/*.db
+state/*.sqlite
+state/*.sqlite3
+
+# large/reproducible downloaded data
+data/snapshots/
+
+# editor/system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.cache/
+state/
+
+runs/
+data/model_downloads/
+data/phase2_downloads/
+data/raw/
+*.bak

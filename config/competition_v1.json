@@ -1,0 +1,10 @@
+{
+  "name": "competition_v1",
+  "research_config": "config/first_study.json",
+  "active_model": "equal_weight",
+  "reason": "Daily screen and five-session cost diagnostic did not establish an AI-candidate advantage over equal weight. Keep the predeclared daily baseline active and all alternatives as shadows; do not select a historical winner.",
+  "notional_capital": 1000000,
+  "gross_exposure": 1.0,
+  "execution_enabled": false,
+  "paper_account_allowlist": []
+}

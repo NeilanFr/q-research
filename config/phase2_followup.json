@@ -1,0 +1,23 @@
+{
+  "id": "ai_momentum_pullback_v1",
+  "discovery_run": "20260921T173042_phase2_36e614",
+  "rule": "momentum_quality_pullback",
+  "provenance": "AI interpretation of actual discovery contribution and conditional residual tables",
+  "thesis": "Temporary weakness within a positive medium-term trend may improve entry selection over buying the strongest recent winners.",
+  "observations": {
+    "momentum_gross_overnight_pnl_per_initial_dollar": 2.029454813605276,
+    "momentum_gross_intraday_pnl_per_initial_dollar": 0.07568249956634204,
+    "top_momentum_quintile_after_five_day_loss_mean_five_session_excess": 0.001144,
+    "top_momentum_quintile_without_loss_mean_five_session_excess": -0.000237,
+    "diagnostic": "discovery_pullback_diagnostic.csv; overlapping labels averaged by date; exploratory, no significance claim"
+  },
+  "mechanism": "Short-lived selling pressure can reverse while persistent medium-term demand supports the stock. Gap attribution motivates preserving overnight ownership; it does not prove this explanation.",
+  "variables": ["adjusted close(t-5)/close(t-63)-1", "negative adjusted five-session close return", "prior 20-session dollar ADV"],
+  "prediction_horizon_sessions": 5,
+  "expected_direction": "higher next-five-session relative return for positive-trend stocks with a recent pullback",
+  "implementation": "Equal sum of cross-sectional momentum and reversal ranks; require positive medium-term momentum; equal weight highest 10; rebalance next open every five sessions. No fitted or searched coefficient.",
+  "comparators": ["momentum", "reversal", "equal_weight"],
+  "falsification": "Reject as an improvement if reused validation net mean does not beat momentum and equal weight at both 5 and 10bps, or if gains are confined to one year/name. Positive results still require prospective evidence because the universe is availability-biased and this is adaptive search.",
+  "evidence_status": "adaptive discovery follow-up; 2018-2022 reused validation; 2023+ remains sealed",
+  "execution_enabled": false
+}

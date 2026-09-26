@@ -1,0 +1,16 @@
+[project]
+name = "quantlab"
+version = "0.1.0"
+description = "Reproducible sector ETF research and prospective paper predictions"
+requires-python = ">=3.13"
+dependencies = ["numpy", "pandas", "matplotlib", "exchange-calendars", "requests"]
+
+[project.scripts]
+quantlab = "quantlab.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["quantlab*"]

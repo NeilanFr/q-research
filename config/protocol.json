@@ -1,0 +1,9 @@
+{
+  "version": "sector_pilot_v1",
+  "registration_evidence": "Protocol and study configuration were archived before scoring in run 20260920T151942_ca864aa8. This local record is not an externally attested preregistration.",
+  "historical_holdout_start": "2023-01-01",
+  "competition_first_session": "2026-09-21",
+  "competition_end_assumption": "2026-10-20",
+  "holdout_policy": "Regular research commands reject outcome dates from 2023 onward. No final historical audit has been authorized by a frozen selection protocol yet. Forward feature calculation may use recent prices without scoring historical outcomes.",
+  "promotion_rule": "No automatic promotion based on historical best Sharpe. Require positive validation incremental net mean against equal_weight and family comparator, survival at 10bps, stability across subperiods, and a separately frozen final audit before replacing baseline. Historical intervals are descriptive after search."
+}

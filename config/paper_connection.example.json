@@ -1,0 +1,10 @@
+{
+  "mode": "PAPER",
+  "execution_enabled": false,
+  "host": "127.0.0.1",
+  "port": 7497,
+  "client_id": 721,
+  "expected_account": "",
+  "paper_account_allowlist": [],
+  "independently_verified_paper": false
+}

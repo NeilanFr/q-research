@@ -1,0 +1,1737 @@
+{
+  "universe_id": "qqq_dia_historical_2012_v1",
+  "created_for": "Phase 2 discovery-only cross-sectional equity research",
+  "selection_rule": "Union of all common-stock identities listed in QQQ September 30, 2012 and DIA October 31, 2012 schedules; deduplicate the same historical issuer. No ranking by subsequent performance or current index membership.",
+  "historical_roster_count": 127,
+  "discovery_start": "2013-04-01",
+  "discovery_end": "2017-12-31",
+  "validation_start": "2018-01-01",
+  "validation_end": "2022-12-31",
+  "holdout_start": "2023-01-01",
+  "warmup_start": "2010-01-01",
+  "evidence_cap": "DISCOVERY ONLY. Conditioning on currently retrievable continuous historical series creates survivor/availability bias even though original membership is contemporaneously documented. Unavailable and unresolved identities remain in this manifest. No unbiased historical-alpha or original-index-replication claim is permitted.",
+  "eligibility_policy": "research_eligible is provisional identity eligibility, not a successful download or return-based selection. Require full trading-session coverage and source metadata identity checks before including a symbol. Preserve every rejection and reason. Never fill a missing delisting outcome with zero, silently drop losing names, or substitute an acquirer's pre-merger history. No 2023+ strategy outcomes were examined to create this file.",
+  "scope_note": "127 unique historical identities preserve the complete union rather than deleting seven to satisfy an approximate 120-name preference. QQQ includes foreign issuers and ADRs listed in the US.",
+  "sources": {
+    "qqq_2012_09_30": {
+      "fund": "PowerShares QQQ Trust, Series 1",
+      "as_of": "2012-09-30",
+      "public_filing_date": "2013-01-28",
+      "accepted_at_et": "2013-01-28T15:14:02",
+      "document_url": "https://www.sec.gov/Archives/edgar/data/1067839/000110465913005075/a12-24340_1n30b2.htm",
+      "filing_index_url": "https://www.sec.gov/Archives/edgar/data/1067839/000110465913005075/0001104659-13-005075-index.htm",
+      "roster_locator": "Schedule of Investments, printed pages 2-4; 100 stock records.",
+      "transcription_note": "Company names transcribed from primary schedule. Historical ticker labels manually mapped and explicitly flagged where reused/unresolved."
+    },
+    "dia_2012_10_31": {
+      "fund": "SPDR Dow Jones Industrial Average ETF Trust",
+      "as_of": "2012-10-31",
+      "prospectus_date": "2013-02-22",
+      "us_prospectus_date": "2013-02-21",
+      "public_available_by": "2013-03-01",
+      "publication_evidence": "SEC-hosted prospectus header dated February 22, 2013, incorporating US prospectus dated February 21, 2013. Conservative March 1 availability; April study start follows both.",
+      "document_url": "https://www.sec.gov/Archives/edgar/data/1041130/000119312513076798/d477369d497.htm",
+      "roster_locator": "Schedule of Investments dated October 31, 2012; printed page 34; 30 stock records."
+    }
+  },
+  "auction_constraints": {
+    "nyse_moc_regular_session_cutoff_et": "15:50",
+    "nasdaq_moc_regular_session_cutoff_et": "15:55",
+    "nasdaq_loc_regular_session_cutoff_et": "15:58",
+    "daily_predictor_rule": "Full daily bar through close t cannot generate a fill in the same close t auction. For close execution at t+1, features stop at close t; broker cutoffs can be earlier and early-close sessions need calendar-aware timing.",
+    "sources": [
+      "https://www.nyse.com/trade/auctions",
+      "https://listingcenter.nasdaq.com/rulebook/nasdaq/rules/nasdaq-equity-4"
+    ]
+  },
+  "records": [
+    {
+      "historical_name": "Apple, Inc.",
+      "historical_symbol": "AAPL",
+      "symbol": "AAPL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AAPL"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Microsoft Corp.",
+      "historical_symbol": "MSFT",
+      "symbol": "MSFT",
+      "original_source": [
+        "qqq_2012_09_30",
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MSFT"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Google, Inc., Class A",
+      "historical_symbol": "GOOG",
+      "symbol": "GOOGL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "GOOGL",
+        "GOOG"
+      ],
+      "lineage_note": "Original GOOG was Class A; it became GOOGL in April 2014. Today's GOOG is Class C. Class-C distribution adjustment still needs provider audit.",
+      "lineage_sources": [
+        "https://www.sec.gov/Archives/edgar/data/1288776/000128877615000008/goog2014123110-k.htm"
+      ]
+    },
+    {
+      "historical_name": "Oracle Corp.",
+      "historical_symbol": "ORCL",
+      "symbol": "ORCL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ORCL"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Amazon.Com, Inc.",
+      "historical_symbol": "AMZN",
+      "symbol": "AMZN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AMZN"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Intel Corp.",
+      "historical_symbol": "INTC",
+      "symbol": "INTC",
+      "original_source": [
+        "qqq_2012_09_30",
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "INTC"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "QUALCOMM, Inc.",
+      "historical_symbol": "QCOM",
+      "symbol": "QCOM",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "QCOM"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Cisco Systems, Inc.",
+      "historical_symbol": "CSCO",
+      "symbol": "CSCO",
+      "original_source": [
+        "qqq_2012_09_30",
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CSCO"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Comcast Corp., Class A",
+      "historical_symbol": "CMCSA",
+      "symbol": "CMCSA",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CMCSA"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Kraft Foods, Inc., Class A",
+      "historical_symbol": "KFT",
+      "symbol": "MDLZ",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MDLZ",
+        "KFT"
+      ],
+      "lineage_note": "Kraft Foods Inc. continued as Mondelez (MDLZ) on 2012-10-02, before the study start; it distributed KRFT shares. MDLZ is continuing issuer, not KHC. Pre-study warmup crosses spinoff and requires adjustment audit.",
+      "lineage_sources": [
+        "https://www.mondelezinternational.com/investors/stock/spin-off-information/"
+      ]
+    },
+    {
+      "historical_name": "Amgen, Inc.",
+      "historical_symbol": "AMGN",
+      "symbol": "AMGN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AMGN"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "eBay, Inc.",
+      "historical_symbol": "EBAY",
+      "symbol": "EBAY",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "EBAY"
+      ],
+      "lineage_note": "Continuing EBAY ticker; PayPal spinoff creates an in-kind distribution requiring vendor-adjustment audit. This is a continuing-issuer proxy, not a reconstructed EBAY-plus-PYPL share ledger."
+    },
+    {
+      "historical_name": "Express Scripts Holding Co.",
+      "historical_symbol": "ESRX",
+      "symbol": "ESRX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "ESRX"
+      ],
+      "lineage_note": "Express Scripts acquired by Cigna; legacy price availability and cash/share terminal consideration not audited."
+    },
+    {
+      "historical_name": "Gilead Sciences, Inc.",
+      "historical_symbol": "GILD",
+      "symbol": "GILD",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "GILD"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Costco Wholesale Corp.",
+      "historical_symbol": "COST",
+      "symbol": "COST",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "COST"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Starbucks Corp.",
+      "historical_symbol": "SBUX",
+      "symbol": "SBUX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "SBUX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "News Corp., Class A",
+      "historical_symbol": "NWSA",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "NWSA",
+        "FOXA"
+      ],
+      "lineage_note": "Roster News Corp Class A predates the 2013 publishing spinoff; old company became 21st Century Fox and later underwent Disney transaction/new Fox spinoff. Today's NWSA is not this full historical line."
+    },
+    {
+      "historical_name": "Biogen IDEC, Inc.",
+      "historical_symbol": "BIIB",
+      "symbol": "BIIB",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "BIIB"
+      ],
+      "lineage_note": "Biogen IDEC continued as Biogen under BIIB; Bioverativ spinoff adjustment requires audit."
+    },
+    {
+      "historical_name": "Celgene Corp.",
+      "historical_symbol": "CELG",
+      "symbol": "CELG",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "CELG"
+      ],
+      "lineage_note": "Celgene acquired by Bristol-Myers Squibb; cash, shares and contingent value right require audited terminal treatment."
+    },
+    {
+      "historical_name": "DIRECTV",
+      "historical_symbol": "DTV",
+      "symbol": "DTV",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "DTV"
+      ],
+      "lineage_note": "Original DIRECTV acquired by AT&T; no acquirer-history substitution; legacy terminal treatment not audited."
+    },
+    {
+      "historical_name": "Baidu, Inc. ADR",
+      "historical_symbol": "BIDU",
+      "symbol": "BIDU",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "BIDU"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Texas Instruments, Inc.",
+      "historical_symbol": "TXN",
+      "symbol": "TXN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "TXN"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "priceline.com, Inc.",
+      "historical_symbol": "PCLN",
+      "symbol": "BKNG",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "BKNG",
+        "PCLN"
+      ],
+      "lineage_note": "Priceline renamed Booking Holdings; ticker changed to BKNG on 2018-02-27; continuing listed shares.",
+      "lineage_sources": [
+        "https://www.sec.gov/Archives/edgar/data/1075531/000107553118000008/a8-knamechange2018.htm"
+      ]
+    },
+    {
+      "historical_name": "Automatic Data Processing, Inc.",
+      "historical_symbol": "ADP",
+      "symbol": "ADP",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ADP"
+      ],
+      "lineage_note": "Continuing ADP ticker; CDK spinoff adjustment requires audit; do not add CDK retroactively to the roster."
+    },
+    {
+      "historical_name": "Vodafone Group PLC ADR",
+      "historical_symbol": "VOD",
+      "symbol": "VOD",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "VOD"
+      ],
+      "lineage_note": "Original US-listed Vodafone ADR; ADR ratio and Verizon Wireless disposal-related distributions require audit. Universe is US-listed, not exclusively US-domiciled."
+    },
+    {
+      "historical_name": "Viacom, Inc., Class B",
+      "historical_symbol": "VIAB",
+      "symbol": "VIAB",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "VIAB"
+      ],
+      "lineage_note": "Viacom merged with CBS; later Paramount transactions and symbol changes unresolved."
+    },
+    {
+      "historical_name": "Alexion Pharmaceuticals, Inc.",
+      "historical_symbol": "ALXN",
+      "symbol": "ALXN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "ALXN"
+      ],
+      "lineage_note": "Alexion acquired by AstraZeneca; stock/cash consideration and legacy series not audited."
+    },
+    {
+      "historical_name": "Cognizant Technology Solutions Corp., Class A",
+      "historical_symbol": "CTSH",
+      "symbol": "CTSH",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CTSH"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Intuitive Surgical, Inc.",
+      "historical_symbol": "ISRG",
+      "symbol": "ISRG",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ISRG"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Yahoo!, Inc.",
+      "historical_symbol": "YHOO",
+      "symbol": "YHOO",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "YHOO"
+      ],
+      "lineage_note": "Yahoo legacy operating-sale/Altaba liquidation chain unresolved; do not substitute a similarly named issuer."
+    },
+    {
+      "historical_name": "Whole Foods Market, Inc.",
+      "historical_symbol": "WFM",
+      "symbol": "WFM",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "WFM"
+      ],
+      "lineage_note": "Whole Foods acquired for cash; legacy history and final consideration required."
+    },
+    {
+      "historical_name": "Broadcom Corp., Class A",
+      "historical_symbol": "BRCM",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "BRCM"
+      ],
+      "lineage_note": "Original Broadcom was acquired by Avago. Do not substitute AVGO history, which belongs to a distinct roster member; terminal consideration and exchange ratio unmodeled."
+    },
+    {
+      "historical_name": "Intuit, Inc.",
+      "historical_symbol": "INTU",
+      "symbol": "INTU",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "INTU"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Dell, Inc.",
+      "historical_symbol": "DELL",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "DELL"
+      ],
+      "lineage_note": "Original Dell was taken private in 2013; current Dell Technologies returned to public trading later. Reused ticker must not bridge the private interval."
+    },
+    {
+      "historical_name": "Adobe Systems, Inc.",
+      "historical_symbol": "ADBE",
+      "symbol": "ADBE",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ADBE"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Bed Bath & Beyond, Inc.",
+      "historical_symbol": "BBBY",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "BBBY",
+        "BBBYQ"
+      ],
+      "lineage_note": "Original Bed Bath & Beyond underwent bankruptcy. A later issuer using the brand/ticker is not continuity of the cancelled old common stock."
+    },
+    {
+      "historical_name": "Ross Stores, Inc.",
+      "historical_symbol": "ROST",
+      "symbol": "ROST",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ROST"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Citrix Systems, Inc.",
+      "historical_symbol": "CTXS",
+      "symbol": "CTXS",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "CTXS"
+      ],
+      "lineage_note": "Citrix taken private; legacy history and cash consideration required."
+    },
+    {
+      "historical_name": "PACCAR, Inc.",
+      "historical_symbol": "PCAR",
+      "symbol": "PCAR",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "PCAR"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Applied Materials, Inc.",
+      "historical_symbol": "AMAT",
+      "symbol": "AMAT",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AMAT"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Cerner Corp.",
+      "historical_symbol": "CERN",
+      "symbol": "CERN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "CERN"
+      ],
+      "lineage_note": "Cerner acquired for cash; legacy history and final consideration required."
+    },
+    {
+      "historical_name": "Fastenal Co.",
+      "historical_symbol": "FAST",
+      "symbol": "FAST",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "FAST"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Symantec Corp.",
+      "historical_symbol": "SYMC",
+      "symbol": "GEN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "GEN",
+        "SYMC"
+      ],
+      "lineage_note": "Continuing consumer-security issuer: Symantec -> NortonLifeLock (NLOK) in 2019 -> Gen Digital (GEN) in 2022. Enterprise-business disposal and special cash distribution need price-adjustment audit.",
+      "lineage_sources": [
+        "https://benefits.gendigital.com/document/5",
+        "https://investor.gendigital.com/news/news-details/2022/Introducing-Gen-The-Company-to-Power-Digital-Freedom/default.aspx/1000/"
+      ]
+    },
+    {
+      "historical_name": "Activision Blizzard, Inc.",
+      "historical_symbol": "ATVI",
+      "symbol": "ATVI",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "ATVI"
+      ],
+      "lineage_note": "Activision Blizzard acquired for cash; legacy history and final consideration required."
+    },
+    {
+      "historical_name": "Seagate Technology PLC",
+      "historical_symbol": "STX",
+      "symbol": "STX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "STX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Mattel, Inc.",
+      "historical_symbol": "MAT",
+      "symbol": "MAT",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MAT"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "CA, Inc.",
+      "historical_symbol": "CA",
+      "symbol": "CA",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "CA"
+      ],
+      "lineage_note": "CA Inc. acquired for cash; legacy history and final consideration required."
+    },
+    {
+      "historical_name": "Paychex, Inc.",
+      "historical_symbol": "PAYX",
+      "symbol": "PAYX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "PAYX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Vertex Pharmaceuticals, Inc.",
+      "historical_symbol": "VRTX",
+      "symbol": "VRTX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "VRTX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "NetApp, Inc.",
+      "historical_symbol": "NTAP",
+      "symbol": "NTAP",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "NTAP"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Wynn Resorts Ltd.",
+      "historical_symbol": "WYNN",
+      "symbol": "WYNN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "WYNN"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Dollar Tree, Inc.",
+      "historical_symbol": "DLTR",
+      "symbol": "DLTR",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "DLTR"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Altera Corp.",
+      "historical_symbol": "ALTR",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "ALTR"
+      ],
+      "lineage_note": "Original Altera acquired by Intel. ALTR later identified another issuer; no unverified ticker splice."
+    },
+    {
+      "historical_name": "Perrigo Co.",
+      "historical_symbol": "PRGO",
+      "symbol": "PRGO",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "PRGO"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "SanDisk Corp.",
+      "historical_symbol": "SNDK",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "SNDK"
+      ],
+      "lineage_note": "Original SanDisk acquired by Western Digital; later SanDisk spinoff reused SNDK. Current quote cannot be assumed to represent old security."
+    },
+    {
+      "historical_name": "Fiserv, Inc.",
+      "historical_symbol": "FISV",
+      "symbol": "FISV",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "FISV"
+      ],
+      "lineage_note": "FISV -> FI in 2023 -> FISV in November 2025; Nasdaq explicitly instructs preserving prior FI history under FISV.",
+      "lineage_sources": [
+        "https://www.nasdaqtrader.com/TraderNews.aspx?id=DTN2025-32"
+      ]
+    },
+    {
+      "historical_name": "Sirius XM Radio, Inc.",
+      "historical_symbol": "SIRI",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "SIRI"
+      ],
+      "lineage_note": "Liberty/Sirius reorganization, tracking-stock history and reverse split make old-versus-current share continuity unresolved; do not splice by matching ticker alone."
+    },
+    {
+      "historical_name": "O'reilly Automotive, Inc.",
+      "historical_symbol": "ORLY",
+      "symbol": "ORLY",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ORLY"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Mylan, Inc.",
+      "historical_symbol": "MYL",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "MYL",
+        "VTRS"
+      ],
+      "lineage_note": "Mylan/Upjohn combination created Viatris. A current VTRS series is not accepted as complete MYL history without exchange-ratio and source continuity verification."
+    },
+    {
+      "historical_name": "Check Point Software Technologies Ltd.",
+      "historical_symbol": "CHKP",
+      "symbol": "CHKP",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CHKP"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Monster Beverage Corp.",
+      "historical_symbol": "MNST",
+      "symbol": "MNST",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MNST"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Liberty Interactive Corp., Class A",
+      "historical_symbol": "LINTA",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "LINTA",
+        "QVCA",
+        "QRTEA",
+        "QVCGA"
+      ],
+      "lineage_note": "Liberty Interactive tracking-stock reorganizations and later Qurate/QVC lineage unresolved; retain original identity but exclude until corporate-action chain and terminal history audited."
+    },
+    {
+      "historical_name": "CH Robinson Worldwide, Inc.",
+      "historical_symbol": "CHRW",
+      "symbol": "CHRW",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CHRW"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Xilinx, Inc.",
+      "historical_symbol": "XLNX",
+      "symbol": "XLNX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "XLNX"
+      ],
+      "lineage_note": "Xilinx acquired by AMD; do not use pre-merger AMD prices as Xilinx history."
+    },
+    {
+      "historical_name": "Sigma-Aldrich Corp.",
+      "historical_symbol": "SIAL",
+      "symbol": "SIAL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "SIAL"
+      ],
+      "lineage_note": "Sigma-Aldrich acquired; legacy history and terminal cash consideration required."
+    },
+    {
+      "historical_name": "Life Technologies Corp.",
+      "historical_symbol": "LIFE",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "LIFE"
+      ],
+      "lineage_note": "Original Life Technologies was acquired. Later LIFE ticker usage is not accepted as old Life Technologies continuity."
+    },
+    {
+      "historical_name": "Avago Technologies Ltd.",
+      "historical_symbol": "AVGO",
+      "symbol": "AVGO",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AVGO"
+      ],
+      "lineage_note": "Roster issuer is Avago Technologies, the continuing AVGO line. Do not merge with the separate original Broadcom/BRCM roster record merely because AVGO later adopted Broadcom's name."
+    },
+    {
+      "historical_name": "F5 Networks, Inc.",
+      "historical_symbol": "FFIV",
+      "symbol": "FFIV",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "FFIV"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "NVIDIA Corp.",
+      "historical_symbol": "NVDA",
+      "symbol": "NVDA",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "NVDA"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Garmin Ltd.",
+      "historical_symbol": "GRMN",
+      "symbol": "GRMN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "GRMN"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "KLA-Tencor Corp.",
+      "historical_symbol": "KLAC",
+      "symbol": "KLAC",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "KLAC"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Virgin Media, Inc.",
+      "historical_symbol": "VMED",
+      "symbol": "VMED",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "VMED"
+      ],
+      "lineage_note": "Virgin Media acquired; cash/share consideration and legacy series not audited."
+    },
+    {
+      "historical_name": "Staples, Inc.",
+      "historical_symbol": "SPLS",
+      "symbol": "SPLS",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "SPLS"
+      ],
+      "lineage_note": "Staples taken private; legacy history and terminal cash consideration required."
+    },
+    {
+      "historical_name": "Maxim Integrated Products, Inc.",
+      "historical_symbol": "MXIM",
+      "symbol": "MXIM",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "MXIM"
+      ],
+      "lineage_note": "Maxim acquired by Analog Devices; exchange ratio and legacy data not audited."
+    },
+    {
+      "historical_name": "Stericycle, Inc.",
+      "historical_symbol": "SRCL",
+      "symbol": "SRCL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "SRCL"
+      ],
+      "lineage_note": "Stericycle acquired; legacy history and terminal cash consideration required."
+    },
+    {
+      "historical_name": "Autodesk, Inc.",
+      "historical_symbol": "ADSK",
+      "symbol": "ADSK",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "ADSK"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Nuance Communications, Inc.",
+      "historical_symbol": "NUAN",
+      "symbol": "NUAN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "NUAN"
+      ],
+      "lineage_note": "Nuance acquired by Microsoft; legacy history and terminal cash consideration required."
+    },
+    {
+      "historical_name": "Expeditors International of Washington, Inc.",
+      "historical_symbol": "EXPD",
+      "symbol": "EXPD",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "EXPD"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "VeriSign, Inc.",
+      "historical_symbol": "VRSN",
+      "symbol": "VRSN",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "VRSN"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Linear Technology Corp.",
+      "historical_symbol": "LLTC",
+      "symbol": "LLTC",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "LLTC"
+      ],
+      "lineage_note": "Linear Technology acquired by Analog Devices; legacy history and terminal cash/share consideration required."
+    },
+    {
+      "historical_name": "Expedia, Inc.",
+      "historical_symbol": "EXPE",
+      "symbol": "EXPE",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "EXPE"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Henry Schein, Inc.",
+      "historical_symbol": "HSIC",
+      "symbol": "HSIC",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "HSIC"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Akamai Technologies, Inc.",
+      "historical_symbol": "AKAM",
+      "symbol": "AKAM",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AKAM"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Randgold Resources Ltd. ADR",
+      "historical_symbol": "GOLD",
+      "symbol": null,
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "GOLD"
+      ],
+      "lineage_note": "Roster GOLD means Randgold Resources ADR. Later GOLD represented Barrick following merger; this reused ticker is not accepted as Randgold's historical series."
+    },
+    {
+      "historical_name": "BMC Software, Inc.",
+      "historical_symbol": "BMC",
+      "symbol": "BMC",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "BMC"
+      ],
+      "lineage_note": "BMC Software taken private; legacy history and terminal cash consideration required."
+    },
+    {
+      "historical_name": "Microchip Technology, Inc.",
+      "historical_symbol": "MCHP",
+      "symbol": "MCHP",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MCHP"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Micron Technology, Inc.",
+      "historical_symbol": "MU",
+      "symbol": "MU",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MU"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Sears Holdings Corp.",
+      "historical_symbol": "SHLD",
+      "symbol": "SHLD",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "SHLD"
+      ],
+      "lineage_note": "Sears Holdings bankrupt/delisted; cancelled equity and terminal loss unavailable without dedicated data."
+    },
+    {
+      "historical_name": "Lam Research Corp.",
+      "historical_symbol": "LRCX",
+      "symbol": "LRCX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "LRCX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "DENTSPLY International, Inc.",
+      "historical_symbol": "XRAY",
+      "symbol": "XRAY",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "XRAY"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Marvell Technology Group Ltd.",
+      "historical_symbol": "MRVL",
+      "symbol": "MRVL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MRVL"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Fossil, Inc.",
+      "historical_symbol": "FOSL",
+      "symbol": "FOSL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "FOSL"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Electronic Arts, Inc.",
+      "historical_symbol": "EA",
+      "symbol": "EA",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "EA"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Flextronics International Ltd.",
+      "historical_symbol": "FLEX",
+      "symbol": "FLEX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "FLEX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Research In Motion Ltd.",
+      "historical_symbol": "RIMM",
+      "symbol": "BB",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "BB",
+        "RIMM"
+      ],
+      "lineage_note": "Research In Motion renamed BlackBerry in 2013; subsequent US exchange transfer led to BB in 2017. Continuing issuer; provider must supply pre-change history.",
+      "lineage_sources": [
+        "https://investors.blackberry.com/faq"
+      ]
+    },
+    {
+      "historical_name": "Green Mountain Coffee Roasters, Inc.",
+      "historical_symbol": "GMCR",
+      "symbol": "GMCR",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "GMCR"
+      ],
+      "lineage_note": "Green Mountain/Keurig taken private; do not substitute later KDP history."
+    },
+    {
+      "historical_name": "Infosys Technologies Ltd. ADR",
+      "historical_symbol": "INFY",
+      "symbol": "INFY",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "INFY"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Warner Chilcott PLC, Class A",
+      "historical_symbol": "WCRX",
+      "symbol": "WCRX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "WCRX"
+      ],
+      "lineage_note": "Warner Chilcott merger chain unresolved; no present-day acquirer substitution."
+    },
+    {
+      "historical_name": "Apollo Group, Inc., Class A",
+      "historical_symbol": "APOL",
+      "symbol": "APOL",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "APOL"
+      ],
+      "lineage_note": "Apollo Education taken private; do not confuse original APOL with Apollo Global Management APO."
+    },
+    {
+      "historical_name": "NetFlix, Inc.",
+      "historical_symbol": "NFLX",
+      "symbol": "NFLX",
+      "original_source": [
+        "qqq_2012_09_30"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "NFLX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "3M Co.",
+      "historical_symbol": "MMM",
+      "symbol": "MMM",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MMM"
+      ],
+      "lineage_note": "Continuing 3M ticker; Solventum spinoff requires vendor-adjustment audit."
+    },
+    {
+      "historical_name": "Alcoa, Inc.",
+      "historical_symbol": "AA",
+      "symbol": null,
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "AA",
+        "ARNC",
+        "HWM"
+      ],
+      "lineage_note": "Original Alcoa split into Alcoa Corp and Arconic, followed by further separation. Today's AA is not the original 2012 issuer's complete lineage; unresolved distribution/reused-symbol chain."
+    },
+    {
+      "historical_name": "American Express Co.",
+      "historical_symbol": "AXP",
+      "symbol": "AXP",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "AXP"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "AT&T, Inc.",
+      "historical_symbol": "T",
+      "symbol": "T",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "T"
+      ],
+      "lineage_note": "Continuing AT&T ticker; WarnerMedia distribution requires adjustment audit. Continuing-issuer series does not itself track received WBD shares."
+    },
+    {
+      "historical_name": "Bank of America Corp.",
+      "historical_symbol": "BAC",
+      "symbol": "BAC",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "BAC"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Caterpillar, Inc.",
+      "historical_symbol": "CAT",
+      "symbol": "CAT",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CAT"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Chevron Corp.",
+      "historical_symbol": "CVX",
+      "symbol": "CVX",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "CVX"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "E.I. du Pont de Nemours & Co.",
+      "historical_symbol": "DD",
+      "symbol": null,
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "DD",
+        "DWDP"
+      ],
+      "lineage_note": "Original E.I. du Pont merged into DowDuPont then separated into multiple issuers. Today's DD is not accepted as a simple uninterrupted old-DD series without an audited chain."
+    },
+    {
+      "historical_name": "Exxon Mobil Corp.",
+      "historical_symbol": "XOM",
+      "symbol": "XOM",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "XOM"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "General Electric Co.",
+      "historical_symbol": "GE",
+      "symbol": "GE",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "GE"
+      ],
+      "lineage_note": "Continuing GE ticker; large reverse split and later healthcare/energy spinoffs require provider adjustment checks. This is a continuing-issuer price proxy."
+    },
+    {
+      "historical_name": "Hewlett-Packard Co.",
+      "historical_symbol": "HPQ",
+      "symbol": "HPQ",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "HPQ"
+      ],
+      "lineage_note": "Continuing Hewlett-Packard/HP Inc line retains HPQ; HPE spinoff in 2015 requires vendor-adjustment audit. Do not substitute HPE or reconstruct a shareholder bundle from HPQ alone."
+    },
+    {
+      "historical_name": "International Business Machines Corp.",
+      "historical_symbol": "IBM",
+      "symbol": "IBM",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "IBM"
+      ],
+      "lineage_note": "Continuing IBM ticker; Kyndryl distribution requires adjustment audit."
+    },
+    {
+      "historical_name": "Johnson & Johnson",
+      "historical_symbol": "JNJ",
+      "symbol": "JNJ",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "JNJ"
+      ],
+      "lineage_note": "Continuing Johnson & Johnson ticker; Kenvue separation/exchange offer requires identity and price-adjustment review, not automatic ticker substitution."
+    },
+    {
+      "historical_name": "JPMorgan Chase & Co.",
+      "historical_symbol": "JPM",
+      "symbol": "JPM",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "JPM"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "McDonald's Corp.",
+      "historical_symbol": "MCD",
+      "symbol": "MCD",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MCD"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Merck & Co., Inc.",
+      "historical_symbol": "MRK",
+      "symbol": "MRK",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "MRK"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Pfizer, Inc.",
+      "historical_symbol": "PFE",
+      "symbol": "PFE",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "PFE"
+      ],
+      "lineage_note": "Continuing Pfizer ticker; Upjohn/Viatris distribution requires adjustment audit."
+    },
+    {
+      "historical_name": "The Boeing Co.",
+      "historical_symbol": "BA",
+      "symbol": "BA",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "BA"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "The Coca-Cola Co.",
+      "historical_symbol": "KO",
+      "symbol": "KO",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "KO"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "The Home Depot, Inc.",
+      "historical_symbol": "HD",
+      "symbol": "HD",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "HD"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "The Procter & Gamble Co.",
+      "historical_symbol": "PG",
+      "symbol": "PG",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "PG"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "The Travelers Cos., Inc.",
+      "historical_symbol": "TRV",
+      "symbol": "TRV",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "TRV"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "The Walt Disney Co.",
+      "historical_symbol": "DIS",
+      "symbol": "DIS",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "DIS"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "United Technologies Corp.",
+      "historical_symbol": "UTX",
+      "symbol": null,
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": false,
+      "probe_symbols": [
+        "UTX",
+        "RTX"
+      ],
+      "lineage_note": "United Technologies separated Carrier/Otis and combined with Raytheon. RTX continuity and distribution adjustments require an audited chain; excluded provisionally."
+    },
+    {
+      "historical_name": "UnitedHealth Group, Inc.",
+      "historical_symbol": "UNH",
+      "symbol": "UNH",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "UNH"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Verizon Communications, Inc.",
+      "historical_symbol": "VZ",
+      "symbol": "VZ",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "VZ"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    },
+    {
+      "historical_name": "Wal-Mart Stores, Inc.",
+      "historical_symbol": "WMT",
+      "symbol": "WMT",
+      "original_source": [
+        "dia_2012_10_31"
+      ],
+      "research_eligible": true,
+      "probe_symbols": [
+        "WMT"
+      ],
+      "lineage_note": "Provisionally continuing issuer/ticker. Eligibility still requires provider identity, full date coverage and corporate-action audit; it is not evidence of point-in-time completeness."
+    }
+  ]
+}

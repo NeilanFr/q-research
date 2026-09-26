@@ -1,0 +1,23 @@
+{
+  "name": "paper_execution_v1",
+  "transmission_suspended": true,
+  "research_policy_version": "3e637985be0bfad1592c",
+  "active_model": "equal_weight",
+  "symbols": ["XLB", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY"],
+  "order_type": "LMT",
+  "time_in_force": "OPG",
+  "routing": "SMART",
+  "currency": "USD",
+  "max_weight": 0.20,
+  "max_gross": 1.0,
+  "cash_reserve_fraction": 0.0025,
+  "cost_reserve_bps": 5,
+  "limit_collar_bps": 25,
+  "max_spread_bps": 20,
+  "quote_max_age_seconds": 30,
+  "account_max_age_seconds": 30,
+  "preview_max_age_seconds": 900,
+  "submit_minutes_before_open": [20, 5],
+  "what_if_min_interval_seconds": 61,
+  "reason": "Execution implementation for the already approved daily equal-weight policy. Bounded opening orders can remain unfilled; no intraday catch-up, leverage, research-close sizing, or shadow transmission. Cash-constrained buys do not anticipate sale proceeds."
+}

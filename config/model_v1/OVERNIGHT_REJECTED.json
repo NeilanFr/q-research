@@ -1,0 +1,11 @@
+{
+  "allocation": 0.0,
+  "decision": "REJECTED",
+  "minimum_predicted_gross": 0.0025,
+  "models": [
+    "ridge_selective",
+    "ridge_weekly",
+    "momentum_regime"
+  ],
+  "reason": "All selective cost-qualified candidates stayed in cash. No credible positive net edge established; no overnight model is activated."
+}
