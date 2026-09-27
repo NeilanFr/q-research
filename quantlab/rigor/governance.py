@@ -33,6 +33,16 @@ def read_ledger(path):
     return rows
 
 
+def require_trial_capacity(rows, study_id, limit, additional=1):
+    """Failed/partial attempts consume the same study budget as successful ones."""
+    if type(limit) is not int or limit < 1 or type(additional) is not int or additional < 1:
+        raise ValueError("Invalid trial budget")
+    used = sum(r["kind"] == "trial_started" and r["payload"].get("run_id", "").startswith(study_id+"_attempt") for r in rows)
+    if used+additional > limit:
+        raise ValueError("Cumulative study simulation budget exhausted")
+    return limit-used-additional
+
+
 @contextmanager
 def exclusive(path):
     lock = Path(str(path) + ".lock")

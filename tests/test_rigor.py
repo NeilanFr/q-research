@@ -11,7 +11,7 @@ import pandas as pd
 from quantlab.data import calendar
 from quantlab.rigor.execution import decision_times, intended_order, simulate
 from quantlab.rigor.governance import (append_event, asof_records, freeze_candidate,
-                                     promotion_allowed, read_ledger, require_available)
+                                     promotion_allowed, read_ledger, require_available, require_trial_capacity)
 from quantlab.rigor.indicators import display_metadata, rsi, technical
 from quantlab.rigor.strategies import make_panel, score_fold, weights_for
 from quantlab.rigor.validation import assert_invariant, block_inference, fit_ridge, predict, training_mask
@@ -199,6 +199,14 @@ class ExecutionTests(unittest.TestCase):
 
 
 class GovernanceTests(unittest.TestCase):
+    def test_failed_attempts_cannot_reset_trial_budget(self):
+        rows = [{"kind": "trial_started", "payload": {"run_id": "study_attempt1"}},
+                {"kind": "attempt_failed", "payload": {"run_id": "study_attempt1"}},
+                {"kind": "trial_started", "payload": {"run_id": "study_attempt2"}}]
+        with self.assertRaisesRegex(ValueError, "Cumulative"):
+            require_trial_capacity(rows, "study", 2)
+        self.assertEqual(require_trial_capacity(rows, "study", 3), 0)
+
     def test_membership_sectors_and_actions_future_records_do_not_backdate(self):
         for field in ("membership", "sector", "split", "dividend", "merger", "symbol_change", "spinoff"):
             rows = pd.DataFrame([{"symbol": "AAA", "effective_at": "2015-01-01T00:00Z", "known_at": "2015-01-01T00:00Z", "value": 1},

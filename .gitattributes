@@ -1,0 +1,11 @@
+# New audit artifacts use stable bytes for portable hashes. Frozen legacy files
+# retain their existing checkout behavior and must never be renormalized here.
+quantlab/rigor/*.py text eol=lf
+tests/test_rigor*.py text eol=lf
+config/rigorous_v2.json text eol=lf
+config/research_history.json text eol=lf
+# These generated JSON files have byte hashes in the ledger. Preserve their
+# exact bytes on every platform rather than applying checkout conversion.
+config/v2_attribution_groups.json -text
+research/*.json -text
+research/*.jsonl text eol=lf

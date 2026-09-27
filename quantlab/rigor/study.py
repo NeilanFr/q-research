@@ -12,7 +12,7 @@ import pandas as pd
 from quantlab.data import ROOT, digest, load_snapshot, now_utc, save_json
 from .audit import audit_inputs, availability_registry, source_hashes
 from .execution import simulate
-from .governance import append_event, fingerprint, read_ledger
+from .governance import append_event, fingerprint, read_ledger, require_trial_capacity
 from .strategies import RULES, make_panel, score_fold, weights_for
 from .metrics import metrics, concentration
 from .validation import block_inference, sharpe_evidence
@@ -121,6 +121,8 @@ def run():
     current = None
     def evaluate(panel, scores, name, year, **stress):
         nonlocal count, current
+        # Include started trials from earlier failed operational attempts.
+        require_trial_capacity(read_ledger(LEDGER), cfg["study_id"], cfg["maximum_simulations"])
         count += 1
         if count > cfg["maximum_simulations"]:
             raise ValueError("Hard simulation budget exceeded")

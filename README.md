@@ -1,5 +1,14 @@
 # Quant research pilot
 
+**V2 research audit:** COMPETITION_V1 / ridge10 remains the frozen champion.
+The 2023 through September 2026 holdout was permanently opened on September 21, 2026.
+V2 uses a bounded, preregistered challenger study; revised prices and missing
+historical identities prevent a point-in-time edge claim. See
+[RIGOROUS_RESEARCH_STATUS.md](RIGOROUS_RESEARCH_STATUS.md) and the
+[research constitution](docs/RESEARCH_CONSTITUTION.md). Historical reports below
+retain their original results; older workflow descriptions are not current
+authorization to change a policy or submit orders.
+
 Current model: **AGGRESSIVE_V1 / ridge10**, top 10 stocks, equal weights,
 five-session rebalancing. The chronological final audit passed; overnight was
 rejected. The old sector policy is suspended. See [WORKING_MODEL_REPORT.md](WORKING_MODEL_REPORT.md)
@@ -23,7 +32,8 @@ Earlier milestone descriptions below are retained as historical context.
 [empirical report](runs/20260921T174553_phase2_a3bc02/report.md). The 85-stock
 screen, overnight tests, AI follow-up, 50/50 attribution and capital time-sharing
 diagnostic did not establish a promotable edge. The original competition policy
-is unchanged; historical 2023+ outcomes remain sealed.
+is unchanged; historical 2023+ outcomes were subsequently opened by the
+September 21 working-model audit.
 
 The first Phase 2 overnight shadow is frozen for September 21 close → September
 22 open. Phase 2 is a separate shadow experiment with stock equal weight and
@@ -67,8 +77,9 @@ data integrity, forward-record integrity and broker safety have automated tests.
 
 The first screen uses 54,620 real daily bars for nine sector ETFs plus SPY,
 2005-01-03 through 2026-09-18. It tests nine explicit rules on discovery
-2006–2017 and validation 2018–2022. Historical performance from 2023 onward is
-reserved; recent prices are used only for current features/risk and future
+2006–2017 and validation 2018–2022. Historical performance from 2023 onward was
+originally reserved and has since been opened; recent prices are used only for
+current features/risk and future
 predictions. Raw vendor responses, data hashes, configs, executable source and
 all serious attempts are retained locally.
 
@@ -115,7 +126,8 @@ code records its new source hash instead of pretending it used the old version.
 Failed runs retain `error.txt` and failed/not-run trial records in SQLite.
 
 For a new experiment, copy a config and give it a new study name and a written
-reason. Do not tune on the reserved history. `five_session_study.json` shows a
+reason. Do not call previously opened history sealed or independent confirmation.
+`five_session_study.json` shows a
 small, interpretable change. New signal rules belong in `make_signals` in
 `quantlab/core.py` and the model allowlist in `experiment.py`, with a provenance
 label and matched baseline in the config. Test future-price invariance before

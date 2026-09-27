@@ -1,0 +1,114 @@
+{
+  "classification": "Analyst-defined static sector proxies for descriptive attribution and exclusion stress only; not GICS and not historical point-in-time sector membership",
+  "empty_groups": [
+    "Materials",
+    "Utilities",
+    "Real estate"
+  ],
+  "groups": {
+    "Consumer discretionary": [
+      "AMZN",
+      "BKNG",
+      "DLTR",
+      "EBAY",
+      "EXPE",
+      "FOSL",
+      "HD",
+      "MAT",
+      "MCD",
+      "ORLY",
+      "ROST",
+      "SBUX",
+      "WYNN"
+    ],
+    "Consumer staples": [
+      "COST",
+      "KO",
+      "MDLZ",
+      "MNST",
+      "PG",
+      "WMT"
+    ],
+    "Energy": [
+      "CVX",
+      "XOM"
+    ],
+    "Financials": [
+      "AXP",
+      "BAC",
+      "JPM",
+      "TRV"
+    ],
+    "Health care": [
+      "AMGN",
+      "BIIB",
+      "GILD",
+      "HSIC",
+      "ISRG",
+      "JNJ",
+      "MRK",
+      "PFE",
+      "PRGO",
+      "UNH",
+      "XRAY"
+    ],
+    "Industrials": [
+      "BA",
+      "CAT",
+      "CHRW",
+      "EXPD",
+      "FAST",
+      "GE",
+      "MMM",
+      "PCAR"
+    ],
+    "Media and telecom": [
+      "CMCSA",
+      "DIS",
+      "NFLX",
+      "T",
+      "VOD",
+      "VZ"
+    ],
+    "Technology": [
+      "AAPL",
+      "ADBE",
+      "ADP",
+      "ADSK",
+      "AKAM",
+      "AMAT",
+      "AVGO",
+      "BB",
+      "BIDU",
+      "CHKP",
+      "CSCO",
+      "CTSH",
+      "FFIV",
+      "FLEX",
+      "GOOGL",
+      "GRMN",
+      "HPQ",
+      "IBM",
+      "INFY",
+      "INTC",
+      "INTU",
+      "KLAC",
+      "LRCX",
+      "MCHP",
+      "MRVL",
+      "MSFT",
+      "MU",
+      "NTAP",
+      "NVDA",
+      "ORCL",
+      "PAYX",
+      "QCOM",
+      "STX",
+      "TXN",
+      "VRSN"
+    ]
+  },
+  "historical_classification_complete": false,
+  "known_at": "2026-09-27T18:52:54.039840+00:00",
+  "permitted_use": "Post-discovery falsification only. Never a historical predictor or promotion-enabling sector audit."
+}
