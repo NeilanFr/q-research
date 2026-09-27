@@ -1,6 +1,6 @@
 param([switch]$MonitorOnly, [int]$MaxSeconds = 0)
 $ErrorActionPreference = 'Stop'
-$paperRoot = 'C:\Users\Neila\quant-research'
+. (Join-Path $PSScriptRoot 'paper_schedule.ps1')
 $paperExit = 2
 $paperLock = $null
 $paperLog = $null
@@ -20,16 +20,28 @@ try {
     if ($MaxSeconds -ne 0 -and (!$MonitorOnly -or $MaxSeconds -lt 1 -or $MaxSeconds -gt 300)) {
         throw 'MaxSeconds requires MonitorOnly and must be 1..300.'
     }
-    $paperArguments = @('-u', '-m', 'quantlab.paper_cli', 'watch', '--batch', 'model_3de7b630030340cd')
-    if ($MonitorOnly) { $paperArguments += '--monitor-only' }
-    if ($MaxSeconds -gt 0) { $paperArguments += @('--max-seconds', [string]$MaxSeconds, '--poll-seconds', '5') }
+    $paperSchedule = Get-PaperSchedule
+    if ([DateTimeOffset]::Now -ge [DateTimeOffset]::Parse($paperSchedule.expires_utc)) {
+        throw 'Scheduled session has expired; no catch-up or stale batch fallback.'
+    }
+    if ($paperSchedule.mode -eq 'readiness') {
+        $paperArguments = @('-u', '-m', 'quantlab.paper_cli', 'readiness', '--session', $paperSchedule.session)
+    } else {
+        $paperArguments = @('-u', '-m', 'quantlab.paper_cli', 'watch', '--batch', $paperSchedule.batch)
+        if ($MonitorOnly) { $paperArguments += '--monitor-only' }
+        if ($MaxSeconds -gt 0) { $paperArguments += @('--max-seconds', [string]$MaxSeconds, '--poll-seconds', '5') }
+    }
     Add-Content -LiteralPath $paperLog -Value ('stdout=' + $paperStdout + [Environment]::NewLine + 'stderr=' + $paperStderr)
     # The scheduled PowerShell host is already hidden. Direct invocation also
     # avoids Start-Process failing when inherited PATH/Path keys coexist.
     $paperPreviousErrorAction = $ErrorActionPreference
     try {
         $ErrorActionPreference = 'Continue'
-        & $paperPython @paperArguments 1> $paperStdout 2> $paperStderr
+        # Refresh the 24-hour test attestation in the scheduled process. This
+        # never grants or refreshes an immutable arm and never generates targets.
+        & $paperPython -m quantlab.paper_cli check 1> $paperStdout 2> $paperStderr
+        if ($LASTEXITCODE -ne 0) { throw 'Complete PAPER checks failed at startup.' }
+        & $paperPython @paperArguments 1>> $paperStdout 2>> $paperStderr
         $paperExit = $LASTEXITCODE
     } finally { $ErrorActionPreference = $paperPreviousErrorAction }
     Add-Content -LiteralPath $paperLog -Value ('Watcher exited with code ' + $paperExit)

@@ -4,7 +4,8 @@ import unittest
 from unittest.mock import Mock
 
 from test_paper_execution import fixtures, NOW
-from quantlab.paper import BrokerSafetyError, build_plan, usd_amounts, validate_snapshot, verify_account
+from quantlab.paper import (BrokerSafetyError, build_plan, currency_cash, usd_amounts,
+                           validate_plan, validate_snapshot, verify_account)
 from quantlab.tws import PaperTWS
 
 
@@ -18,6 +19,7 @@ class CurrencyTests(unittest.TestCase):
 
     def normalized(self):
         return {**self.snapshot, **usd_amounts(self.base,self.fx,self.policy,NOW),
+                "cash_by_currency":{"USD":80000., "CAD":0.},
                 "base_currency":"CAD","execution_currency":"USD","base_amounts":deepcopy(self.base),"fx_quote":deepcopy(self.fx)}
 
     def test_cad_divides_by_ask_and_preserves_originals(self):
@@ -50,6 +52,44 @@ class CurrencyTests(unittest.TestCase):
         for fx in variants:
             with self.subTest(fx=fx), self.assertRaises(BrokerSafetyError):
                 usd_amounts(self.base,fx,self.policy,NOW)
+
+    def test_cad_cash_valuation_does_not_fund_usd_buys(self):
+        snapshot = self.normalized()
+        snapshot["cash_by_currency"] = {"CAD":112000., "USD":0.}
+        plan = build_plan(self.batch,snapshot,self.contracts,self.quotes,self.cfg,self.policy,NOW)
+        self.assertEqual(plan["orders"], [])
+
+    def test_partial_usd_funding_caps_buys_and_revalidation(self):
+        snapshot = self.normalized()
+        snapshot["cash_by_currency"] = {"CAD":98000., "USD":10000.}
+        plan = build_plan(self.batch,snapshot,self.contracts,self.quotes,self.cfg,self.policy,NOW)
+        spent = sum(o["estimated_notional"] + o["estimated_cost"] for o in plan["orders"])
+        self.assertGreater(spent, 0)
+        self.assertLessEqual(spent, 9750.)
+        snapshot["cash_by_currency"]["USD"] = 100.
+        with self.assertRaisesRegex(BrokerSafetyError, "funded USD"):
+            validate_plan(plan,self.batch,snapshot,self.contracts,self.quotes,self.cfg,self.policy,NOW)
+
+    def test_missing_or_negative_currency_cash_fails(self):
+        for balances in (None, {}, {"USD":-1}, {"USD":100, "CAD":-1}, {"USD":100, "EUR":1}):
+            with self.subTest(balances=balances), self.assertRaises(BrokerSafetyError):
+                validate_snapshot({**self.normalized(), "cash_by_currency":balances},self.cfg,self.policy,NOW)
+
+    def test_legacy_and_prefixed_cash_callbacks(self):
+        for prefix in ("", "$LEDGER-"):
+            values = {("DU123456", prefix+"CashBalance", "CAD"):"140000",
+                      ("DU123456", prefix+"CashBalance", "BASE"):"140000"}
+            self.assertEqual(currency_cash(values, "DU123456", "CAD"), {"CAD":140000., "USD":0.})
+            values[("DU123456", prefix+"CashBalance", "USD")] = "1000"
+            self.assertEqual(currency_cash(values, "DU123456", "CAD")["USD"], 1000.)
+
+    def test_conflicting_foreign_missing_and_negative_cash_callbacks_fail(self):
+        variants = [{}, {("DU123456", "CashBalance", "USD"):"-1"},
+                    {("DU123456", "$LEDGER-CashBalance", "EUR"):"1"},
+                    {("DU123456", "CashBalance", "USD"):"1", ("DU123456", "$LEDGER-CashBalance", "USD"):"2"}]
+        for values in variants:
+            with self.subTest(values=values), self.assertRaises(BrokerSafetyError):
+                currency_cash(values, "DU123456", "CAD")
 
     def test_tampering_and_cad_equals_usd_fail(self):
         for name in ("nav","cash","available_funds","buying_power","total_cash_value"):

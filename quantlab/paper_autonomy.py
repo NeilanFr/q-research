@@ -10,13 +10,49 @@ import time
 
 import pandas as pd
 
-from .data import ROOT, digest, now_utc, save_json
+from .data import ROOT, calendar, digest, now_utc, save_json
 from .paper import (BrokerSafetyError, PaperLedger, canonical, connection_config,
                     execution_policy, load_forecast, masked, number, redacted,
                     require, stamp, validate_forecast, validate_snapshot)
 
-TOMORROW_BATCH = "model_3de7b630030340cd"
-TOMORROW_ENTRY = "2026-09-22T13:30:00+00:00"
+def opening_schedule(session):
+    """Report the frozen cadence without shifting it after a missed opening."""
+    from .competition import verify_frozen_policy
+    policy = json.loads((ROOT / "config/model_v1/COMPETITION_V1.json").read_text())
+    verify_frozen_policy(policy)
+    day = pd.Timestamp(session)
+    require(day.tzinfo is None and str(day.date()) == session, "Session must be YYYY-MM-DD")
+    anchor = pd.Timestamp(policy["rebalance_anchor"])
+    require(day >= anchor, "Session precedes the frozen rebalance anchor")
+    cal = calendar(str(anchor.date()), str((day + pd.Timedelta(days=40)).date()))
+    require(cal.is_session(day), "Requested date is not an exchange session")
+    offset = len(cal.sessions_in_range(anchor, day)) - 1
+    remaining = (-offset) % policy["spec"]["cadence"]
+    next_day = day
+    for _ in range(remaining):
+        next_day = cal.next_session(next_day)
+    entry = cal.session_open(day)
+    return {"session":session, "entry_at":entry.isoformat(), "rebalance_anchor":str(anchor.date()),
+            "cadence_sessions":policy["spec"]["cadence"], "eligible_rebalance":remaining == 0,
+            "next_rebalance_session":str(next_day.date()),
+            "required_feature_session":str(cal.previous_session(next_day).date()),
+            "startup_utc":(entry - pd.Timedelta(minutes=45)).isoformat(),
+            "startup_vancouver":(entry - pd.Timedelta(minutes=45)).tz_convert("America/Vancouver").isoformat(),
+            "expires_utc":(entry + pd.Timedelta(minutes=30)).isoformat()}
+
+
+def scheduled_opening():
+    value = json.loads((ROOT / "config/paper_schedule.json").read_text())
+    result = opening_schedule(value["session"])
+    require(value["mode"] in {"readiness", "watch"}, "Unknown scheduled PAPER mode")
+    if value["mode"] == "watch":
+        require(result["eligible_rebalance"], "Scheduled execution is off the frozen rebalance cadence")
+        batch, _ = frozen_batch(value["batch"])
+        require(batch["entry_at"] == result["entry_at"], "Scheduled batch/session mismatch")
+    else:
+        require(value["batch"] is None, "Readiness-only scheduling must not select a batch")
+    return {**result, "batch":value["batch"], "mode":value["mode"],
+            "task_name":"QuantResearch-PAPER-" + value["session"].replace("-", "")}
 
 
 @contextmanager
@@ -146,14 +182,14 @@ class ArmStore:
         return record
 
 
-def inspect_connection(batch_id, ledger=None):
+def inspect_connection(batch_id=None, ledger=None):
     """Read-only broker requests, including server clock and contract resolution."""
     from .tws import PaperTWS
     from .paper_cli import source_fingerprint
     cfg = connection_config()
     require(cfg["host"] == "127.0.0.1", "Commissioning requires host 127.0.0.1")
     require(cfg["execution_enabled"] is False, "Persistent execution_enabled must remain false; only an arm grants temporary authority")
-    batch, policy = frozen_batch(batch_id)
+    batch, policy = frozen_batch(batch_id) if batch_id else (None, execution_policy())
     own_ledger = ledger is None
     ledger = ledger or PaperLedger()
     broker = PaperTWS(cfg, policy, ledger)
@@ -163,7 +199,7 @@ def inspect_connection(batch_id, ledger=None):
         snapshot = broker.snapshot()
         validate_snapshot(snapshot, cfg, policy, now_utc())
         reconciliation = no_unresolved(ledger, snapshot)
-        needed = {r["symbol"] for r in batch["position_intents"] if r["role"] == "active" and r["target_weight"] > 0}
+        needed = {r["symbol"] for r in batch["position_intents"] if r["role"] == "active" and r["target_weight"] > 0} if batch else set()
         needed |= {p["symbol"] for p in snapshot["positions"] if number(p["quantity"]) != 0}
         contracts = broker.qualify(needed)
         broker.clock_check()
@@ -379,11 +415,10 @@ def watch(batch_id=None, poll_seconds=15, monitor_only=False, max_seconds=None):
             ledger.close()
 
 
-def readiness(batch_id=None):
+def readiness(batch_id=None, session=None):
     """Fresh, non-transmitting checks. Missing prerequisites are explicit FAILs."""
     import subprocess
     from .paper_cli import require_tested, source_fingerprint
-    batch_id = batch_id or TOMORROW_BATCH
     checks = {}
 
     def check(name, operation):
@@ -399,12 +434,32 @@ def readiness(batch_id=None):
         require_tested()
         return json.loads((ROOT / "state/paper_checks/passed.json").read_text())
 
+    scheduled = check("configured_scheduled_session", scheduled_opening)
+    session = session or (scheduled["session"] if scheduled else None)
+    batch_id = batch_id or (scheduled["batch"] if scheduled else None)
+    opening = check("requested_exchange_session", lambda: opening_schedule(session))
+
+    def cadence():
+        require(opening is not None, "Valid requested session required")
+        require(opening["eligible_rebalance"], "Requested session is off the frozen five-session cadence; next rebalance "
+                + opening["next_rebalance_session"] + " requires " + opening["required_feature_session"] + " completed data")
+        return opening
+
+    check("frozen_rebalance_cadence", cadence)
     attestation = check("complete_test_suite_and_source_config_fingerprint", tests)
+
+    def coverage():
+        require(attestation is not None and opening is not None, "Passing tests and a valid session required")
+        require(stamp(attestation["at"]) + pd.Timedelta(hours=24) >= stamp(opening["entry_at"]),
+                "Test attestation expires before the requested opening; rerun paper_cli check within 24 hours")
+        return "Test attestation covers the requested opening"
+
+    check("test_attestation_covers_requested_opening", coverage)
 
     def frozen():
         batch, policy = frozen_batch(batch_id)
-        require(batch_id == TOMORROW_BATCH and batch["entry_at"] == TOMORROW_ENTRY,
-                "Readiness is exclusively for the requested September 22 opening batch")
+        require(opening is not None and batch["entry_at"] == opening["entry_at"],
+                "Frozen batch does not match the requested opening session")
         start, end = window(batch, policy)
         return {"batch":batch_id, "version":batch["version"], "decision_at":batch["issued_at_utc"],
                 "entry_at":batch["entry_at"], "window_start":start.isoformat(), "window_end_exclusive":end.isoformat(),
@@ -451,10 +506,17 @@ def readiness(batch_id=None):
                                  str(ROOT / "scripts/verify_paper_task.ps1")], cwd=ROOT, capture_output=True, text=True, timeout=30)
         require(result.returncode == 0, "Scheduled task verification failed: " + result.stderr.strip())
         value = json.loads(result.stdout)
-        require(value["passed"] is True, "Scheduled task settings mismatch")
+        require(value["passed"] is True and value["session"] == session and value["batch"] == batch_id,
+                "Scheduled task settings/batch/session mismatch")
         return value
 
     check("one_time_Windows_scheduled_task", task)
+
+    def execution_mode():
+        require(scheduled is not None and scheduled["mode"] == "watch", "Scheduled task is readiness-only; cannot submit orders")
+        return "Exact-batch watcher configured; immutable arm still required"
+
+    check("scheduled_execution_mode", execution_mode)
 
     def startup():
         value = json.loads((ROOT / "state/paper_checks/watcher-startup-test.json").read_text())
@@ -480,7 +542,7 @@ def readiness(batch_id=None):
     check("no_duplicate_watcher_and_fail_closed_regressions", duplicates)
     ready = all(row["status"] == "PASS" for row in checks.values())
     result = {"at":now_utc(), "ready":ready, "status":"READY FOR AUTONOMOUS PAPER OPEN" if ready else "NOT READY",
-              "batch":batch_id, "checks":checks,
+              "session":session, "batch":batch_id, "opening":opening, "checks":checks,
               "runtime_requirements":"Authenticated TWS PAPER must remain connected; fresh live quotes, account reconciliation, clock, arm/source checks and exact what-if previews must pass inside the frozen window. Failures never authorize catch-up or ambiguous retransmission."}
     save_json(ROOT / "state/paper_checks/TOMORROW_PREOPEN_READINESS.json", result)
     return result

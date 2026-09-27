@@ -191,6 +191,10 @@ def commission(action, batch_id=None, enable=False, observe_seconds=60):
     ledger = PaperLedger()
     broker, snapshot, batch, plan, reconciled = None,None,None,None,None
     try:
+        if action in {"dry-run", "preview"}:
+            require(bool(batch_id), "Dry-run/preview requires an explicit fresh batch ID; no latest-batch fallback")
+            batch = load_forecast(batch_id)
+            validate_forecast(batch,policy,now_utc(),submission=action == "preview")
         if action == "execute":
             from .paper_autonomy import require_active_arm
             require(bool(batch_id), "Execution requires an explicitly armed batch ID")
@@ -275,9 +279,12 @@ def schedule(now):
     sessions = cal.schedule
     decisions = sessions["close"]+pd.Timedelta(hours=1)
     openings = sessions["open"]-pd.Timedelta(minutes=20)
+    from .paper_autonomy import opening_schedule
+    next_session = sessions.index[openings > now][0].date().isoformat()
     return {"now":now.isoformat(),"latest_feature_session":str(latest_completed_session(now).date()),
             "next_decision_at":decisions[decisions>now].iloc[0].isoformat(),
             "next_commission_at":openings[openings>now].iloc[0].isoformat(),
+            "frozen_model_schedule":opening_schedule(next_session),
             "market_open":bool(((sessions["open"]<=now)&(now<sessions["close"])).any())}
 
 
@@ -290,8 +297,9 @@ def watch(poll_seconds=15, research_only=False, batch_id=None, monitor_only=Fals
 def main(argv=None):
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action",choices=["status","check","inspect","dry-run","preview","execute","reconcile","watch","arm","readiness"])
+    parser.add_argument("action",choices=["status","check","inspect","dry-run","preview","execute","reconcile","watch","arm","readiness","scheduled-opening"])
     parser.add_argument("--batch")
+    parser.add_argument("--session",help="Requested readiness session, YYYY-MM-DD")
     parser.add_argument("--enable-paper",action="store_true",help="Retired and rejected; use the explicit one-batch arm command")
     parser.add_argument("--observe-seconds",type=int,default=1500)
     parser.add_argument("--research-only",action="store_true",help="Deprecated alias for --monitor-only; never performs research")
@@ -300,7 +308,10 @@ def main(argv=None):
     parser.add_argument("--poll-seconds",type=int,default=15)
     args = parser.parse_args(argv)
     require(0 <= args.observe_seconds <= 3600,"Observation must be between 0 and 3600 seconds")
-    if args.action == "status":
+    if args.action == "scheduled-opening":
+        from .paper_autonomy import scheduled_opening
+        print(json.dumps(scheduled_opening(),indent=2))
+    elif args.action == "status":
         result = local_status()
         result["schedule"] = schedule(now_utc())
         print(json.dumps(result,indent=2))
@@ -313,7 +324,7 @@ def main(argv=None):
         print(json.dumps(arm(args.batch),indent=2))
     elif args.action == "readiness":
         from .paper_autonomy import readiness
-        result = readiness(args.batch)
+        result = readiness(args.batch,args.session)
         print(json.dumps(result,indent=2))
         if not result["ready"]:
             sys.exit(2)

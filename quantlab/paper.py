@@ -188,6 +188,36 @@ def usd_amounts(base, fx, policy, now):
             for name in ("nav", "cash", "available_funds", "buying_power", "total_cash_value")}
 
 
+def currency_cash(values, account, base_currency):
+    """Read actual currency ledgers, supporting both TWS prefix settings."""
+    balances = {}
+    for (acct, tag, currency), value in values.items():
+        require(acct == account, "Account callback mismatch")
+        if tag not in {"CashBalance", "$LEDGER-CashBalance"} or currency in {"BASE", ""}:
+            continue
+        amount = number(value)
+        require(currency not in balances or balances[currency] == amount, "Conflicting currency cash callbacks")
+        require(amount >= 0, "Negative currency cash requires explicit funding review")
+        require(currency in {"USD", base_currency} or amount == 0, "Foreign cash requires explicit FX review")
+        balances[currency] = amount
+    require(bool(balances), "Missing per-currency broker cash balances")
+    # A completed currency ledger with no USD entry is zero USD, never CAD.
+    balances.setdefault("USD", 0.0)
+    return balances
+
+
+def funded_cash_usd(snapshot):
+    cash = min(number(snapshot[k]) for k in ("cash", "available_funds", "buying_power"))
+    if snapshot["base_currency"] == "CAD":
+        balances = snapshot.get("cash_by_currency")
+        require(isinstance(balances, dict) and "USD" in balances, "Missing actual USD cash balance")
+        for currency, value in balances.items():
+            require(number(value) >= 0, "Negative currency cash requires explicit funding review")
+            require(currency in {"USD", "CAD"} or number(value) == 0, "Foreign cash requires explicit FX review")
+        cash = min(cash, number(balances["USD"]))
+    return cash
+
+
 def validate_snapshot(snapshot, cfg, policy, now, allow_open=False):
     account = verify_account(cfg, snapshot["managed_accounts"])
     require(snapshot.get("complete") is True and snapshot.get("account") == account, "Incomplete account state")
@@ -198,6 +228,7 @@ def validate_snapshot(snapshot, cfg, policy, now, allow_open=False):
         amounts = usd_amounts(snapshot.get("base_amounts"), snapshot.get("fx_quote"), policy, now)
         require(all(math.isclose(number(snapshot.get(k)), v, rel_tol=1e-12, abs_tol=1e-8)
                     for k,v in amounts.items()), "CAD/USD normalization mismatch")
+        funded_cash_usd(snapshot)
     require(snapshot.get("connection_healthy") is True, "Disconnected/reconnect ambiguity")
     for name in ("nav", "cash", "available_funds", "buying_power"):
         require(number(snapshot[name]) >= 0, f"Invalid account {name}")
@@ -235,7 +266,7 @@ def build_plan(batch, snapshot, contracts, quotes, cfg, policy, now):
     weights = {s:w for s,w in weights.items() if w>0}
     weights.update({s:0.0 for s in holdings if s not in weights})
     nav = snapshot["nav"]
-    cash = min(snapshot["cash"], snapshot["available_funds"], snapshot["buying_power"])
+    cash = funded_cash_usd(snapshot)
     budget = max(0, cash - nav * policy["cash_reserve_fraction"])
     targets, orders, mids = {}, [], {}
     for symbol in sorted(weights):
@@ -332,7 +363,7 @@ def validate_plan(plan, batch, snapshot, contracts, quotes, cfg, policy, now, su
         if o["side"] == "BUY":
             buys += qty*price + fee_bound(qty,price,policy)
             require(result[s]*max(price,mids[s])/snapshot["nav"] <= policy["max_weight"], "Position cap exceeded")
-    require(buys <= min(snapshot["cash"], snapshot["available_funds"], snapshot["buying_power"])-snapshot["nav"]*policy["cash_reserve_fraction"]+1e-6 or buys == 0, "Insufficient cash/buying power including costs")
+    require(buys <= funded_cash_usd(snapshot)-snapshot["nav"]*policy["cash_reserve_fraction"]+1e-6 or buys == 0, "Insufficient funded USD cash/buying power including costs")
     # Ignore potential sale fills when checking funding. Existing concentration
     # may only be reduced; no unexplained drift is silently accepted.
     for s, qty in result.items():

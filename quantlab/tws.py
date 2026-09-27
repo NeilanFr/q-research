@@ -19,7 +19,7 @@ from ibapi.order_cancel import OrderCancel
 from ibapi.wrapper import EWrapper
 
 from .data import now_utc
-from .paper import (BrokerSafetyError, age, canonical, digest, load_forecast, number, require,
+from .paper import (BrokerSafetyError, age, canonical, currency_cash, digest, load_forecast, number, require,
                     stamp, usd_amounts, validate_contract, validate_plan, validate_quote, verify_account)
 
 
@@ -299,12 +299,10 @@ class PaperTWS(EWrapper, EClient):
         nav_rows = [(ccy,number(v)) for (acct,tag,ccy),v in summary.items() if tag == "NetLiquidation"]
         require(len(nav_rows)==1 and nav_rows[0][0] in {"USD", "CAD"}, "Unsupported/ambiguous account base currency")
         base_currency = nav_rows[0][0]
-        for (acct,tag,ccy),v in values.items():
-            if tag == "CashBalance" and ccy not in {"USD",base_currency,"BASE",""}:
-                require(abs(number(v)) < .01, "Foreign cash requires explicit FX review")
+        cash_by_currency = currency_cash(values, account, base_currency)
         def amount(tag):
             return number(summary.get((account,tag,base_currency)))
-        cash = amount("TotalCashValue") if base_currency == "CAD" else number(values.get((account,"CashBalance","USD")))
+        cash = amount("TotalCashValue") if base_currency == "CAD" else cash_by_currency["USD"]
         base = {"currency":base_currency,"nav":nav_rows[0][1],"cash":cash,
                 "available_funds":amount("AvailableFunds"),"buying_power":amount("BuyingPower"),
                 "total_cash_value":amount("TotalCashValue")}
@@ -314,9 +312,9 @@ class PaperTWS(EWrapper, EClient):
                   "client_id":self.cfg["client_id"],"complete":True,"connection_healthy":self.healthy,"base_currency":base_currency,
                   "account_type":next((v for (a,t,c),v in summary.items() if t == "AccountType"),"unavailable"),
                   "environment":"PAPER asserted independently; exact connected account allowlist match",
-                  **amounts,"base_amounts":base,"execution_currency":"USD","fx_quote":fx,
+                  **amounts,"base_amounts":base,"execution_currency":"USD","fx_quote":fx,"cash_by_currency":cash_by_currency,
                   "fx_conversion":"CAD divided by USD.CAD ask (CAD per USD); no FX order" if fx else "USD account",
-                  "execution_capacity_usd":min(amounts[k] for k in ("nav","cash","available_funds","buying_power")),
+                  "execution_capacity_usd":min(cash_by_currency["USD"], *(amounts[k] for k in ("nav","cash","available_funds","buying_power"))),
                   "positions":positions,"portfolio":portfolio,"open_orders":opens,"executions":executions,"completed_orders":completed,"pnl":self.pnl_value,
                   "account_values":[{"account":a,"tag":t,"currency":c,"value":v} for (a,t,c),v in values.items()]}
         self.ledger.observe("account_snapshot",result)

@@ -4,13 +4,19 @@ Current model: **AGGRESSIVE_V1 / ridge10**, top 10 stocks, equal weights,
 five-session rebalancing. The chronological final audit passed; overnight was
 rejected. The old sector policy is suspended. See [WORKING_MODEL_REPORT.md](WORKING_MODEL_REPORT.md)
 for results and frozen targets. The current commissioning procedure is
-[September 22 autonomous PAPER opening](docs/AUTONOMOUS_PAPER_OPEN.md).
+[PAPER opening readiness](docs/AUTONOMOUS_PAPER_OPEN.md).
 
 The PAPER adapter now requires an explicit, immutable single-batch arm. The
-watcher performs no research or forecast generation. A one-time Windows task
-starts it at 05:45 Vancouver on September 22. Actual readiness is recorded by
+watcher performs no research or forecast generation. The one-time September 28
+task starts a **readiness-only** check at 05:45 Vancouver. Monday is an exchange
+session but is off the frozen five-session cadence anchored September 22; the
+next allowed rebalance is September 29 using completed September 28 data.
+`config/paper_schedule.json` has no selected batch and cannot submit orders.
+Actual readiness is recorded by
 `paper_cli readiness` in `state/paper_checks/TOMORROW_PREOPEN_READINESS.json`;
-installation alone does not authorize orders. No commissioning orders are sent.
+installation alone does not authorize orders. CAD account valuation requires
+live USD/CAD conversion, and USD stock buys require actual USD cash funding.
+No commissioning orders are sent.
 Earlier milestone descriptions below are retained as historical context.
 
 **Phase 2 is complete:** [findings](docs/PHASE2_FINDINGS.md) and

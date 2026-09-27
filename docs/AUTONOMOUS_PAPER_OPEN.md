@@ -1,90 +1,108 @@
-# September 22, 2026 PAPER opening
+﻿# PAPER opening readiness, September 28, 2026
 
-COMPETITION_V1 is frozen. The sole executable book is AGGRESSIVE_V1 / ridge10,
-version `cbe43010220707651123`. Overnight is rejected. This commissioning path
-does not fetch data, fit models, select strategies or generate forecasts.
+COMPETITION_V1 / AGGRESSIVE_V1 / ridge10 remains frozen at version
+`cbe43010220707651123`. Its five-session cadence is anchored September 22:
+the next eligible rebalance is **Tuesday September 29**, using September 28
+completed data. Monday is an exchange session but not a model rebalance.
+A missed opening does not shift this schedule.
 
-The immutable forecast is `model_3de7b630030340cd`. Its decision was recorded at
-2026-09-22 01:50:11.589605 UTC. Entry is September 22 at 09:30 New York / 06:30
-Vancouver / 13:30 UTC. The frozen submission interval is 06:10 inclusive through
-06:25 exclusive Vancouver time. Orders remain LMT/OPG with the existing quote,
-spread, collar, cash, concentration, capacity and what-if checks. Limits can
-remain unfilled; there is no intraday chase or retroactive execution.
+The September 25 snapshot is `bbca942a0c937e0d83a0` (86 symbols). The existing
+prediction command rejects it with `Not a frozen five-session rebalance date`.
+No September 28 forecast or executable batch was created. The September 22
+batch is stale and must not be reused, re-armed, or executed. Model sources,
+artifacts, registered policy and execution envelope are unchanged.
 
-## Local commissioning
+## September 26 inspection
 
-Run these commands from `C:\Users\Neila\quant-research`:
+The account-only probe authenticated the exact allowlisted PAPER account on
+`127.0.0.1:7497` and passed the broker clock check. TWS reported no stock
+positions, open orders, or executions. Its currency ledger contained
+CAD 1,000,000 and no USD cash. Account identifiers and raw observations stay
+local and ignored. The live USD.CAD request returned an invalid bid during
+Saturday inspection, blocking account normalization, broker sizing and what-if.
+No quote was substituted and no order, including an FX conversion, was sent.
+
+The complete `paper_cli check` passed all 164 tests. Monday readiness is
+**NOT READY**: the cadence and fresh-batch prerequisites fail; live FX, USD
+funding, a valid arm and watcher startup evidence are absent. The Saturday test
+attestation will expire before Monday, so the launcher refreshes it at startup.
+The September 28 readiness-only task passed all 13 Windows settings checks.
+Both dry-run and preview reject a missing explicit fresh batch before connecting
+or selecting any prior forecast. The broker ledger contains zero orders,
+execution batches, executions and what-if requests.
+
+The adapter recognizes both `CashBalance` and `$LEDGER-CashBalance`. It divides
+CAD valuation amounts by a fresh live USD.CAD ask (CAD per USD), retains the
+original CAD amounts and revalidates conversion before sizing. This valuation
+conversion does not exchange currency. Buy funding is additionally capped by
+actual broker USD cash, with fees and the existing reserve. CAD-only cash cannot
+silently fund USD buys through a currency loan. Missing, negative, conflicting
+or unsupported currency balances fail closed. USD funding must be established
+and observed before stock execution.
+
+Fresh scoring of the unchanged fitted model is saved locally in
+`state/paper_checks/sep25-frozen-target-diagnostic.json`. It has no batch ID and
+is not entered in the forecast ledger. CHRW, CTSH, GRMN, HPQ, IBM, MSFT, NTAP,
+NVDA, ORCL and VOD each have 9.95% reference weight, with 0.5% reference cash.
+These are diagnostic weights, not Monday orders or a Tuesday forecast.
+
+## Existing command sequence
+
+After the required session's publication lag (September 28 at 14:00 Vancouver /
+17:00 New York for the next rebalance), from the repository:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/configure_paper.ps1
+.\.venv\Scripts\python.exe -m quantlab.competition fetch
+.\.venv\Scripts\python.exe -m quantlab.competition predict
+```
+
+`predict` loads frozen fitted artifacts without training or retuning. It enforces
+fresh completed data, the publication lag, prospective issuance, the registered
+cadence and one immutable forecast per policy/opening. Do not run `freeze`,
+model fitting, legacy sector `quantlab predict`, or clock/anchor overrides.
+`competition evaluate` is separate outcome bookkeeping, not needed for targets.
+
+After a valid batch exists, select its exact ID and session in
+`config/paper_schedule.json` before commissioning. Currently this configuration
+has session September 28, `batch=null`, and `mode=readiness`.
+
+```powershell
 .\.venv\Scripts\python.exe -m quantlab.paper_cli check
-.\.venv\Scripts\python.exe -m quantlab.paper_cli inspect --batch model_3de7b630030340cd
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/start_paper_bot.ps1 -MonitorOnly -MaxSeconds 30
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install_paper_task.ps1
+.\.venv\Scripts\python.exe -m quantlab.paper_cli inspect
+.\.venv\Scripts\python.exe -m quantlab.paper_cli scheduled-opening
+.\.venv\Scripts\python.exe -m quantlab.paper_cli readiness --session 2026-09-28
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify_paper_task.ps1
 ```
 
-The configuration helper refuses to overwrite an existing configuration. Enter
-the independently verified DU PAPER account and actual TWS API port locally.
-It fixes localhost and client ID 92226, allowlists exactly that account and
-keeps `execution_enabled=false`. The API account must match exactly. A port
-number, DU prefix or broker AccountType alone does not prove PAPER status.
+`inspect` without a batch checks the account and current holdings; it never
+selects the latest forecast. `dry-run` and `preview` require an explicit fresh
+batch. Preview also requires the frozen 06:10 inclusive to 06:25 exclusive
+Vancouver window and live quotes. No weekend what-if bypass exists.
+Readiness reports separate failures for invalid cadence, missing batch,
+unavailable FX, absent arm, expiring tests and a readiness-only task in
+`state/paper_checks/TOMORROW_PREOPEN_READINESS.json`.
 
-After tests and inspection pass, uncheck **TWS > Global Configuration > API >
-Settings > Read-Only API**. Then explicitly run:
+## One-time startup and authorization
 
-```powershell
-.\.venv\Scripts\python.exe -m quantlab.paper_cli arm --batch model_3de7b630030340cd
-```
+Installer and verifier read the requested date and mode through
+`paper_cli scheduled-opening`. The September 28 task starts at 05:45 Vancouver,
+expires at 07:00 and runs **readiness only**. It cannot trade or generate targets.
+The launcher refreshes the complete test attestation, writes private timestamped
+logs, propagates blocked readiness exits and rejects expired sessions. Existing
+tasks are not overwritten silently. The runner has no hardcoded September 22 batch.
 
-Read the local confirmation and type `ARM PAPER`. This command connects only to
-inspect balances, positions, orders, executions, contracts and the server clock;
-it never invokes order transport, including what-if. It then records an immutable
-single-batch authorization. The persistent execution flag stays false. The
-operator's Read-Only confirmation is recorded as such, not presented as an API
-observation; successful what-if responses are still required tomorrow.
+For a later eligible session, `mode=watch` requires a valid exact batch matching
+the opening. The complete test attestation lasts 24 hours. The existing local
+`paper_cli arm --batch <exact-id>` still requires the operator's Read-Only API
+confirmation. No arm was created on September 26. Source, private config,
+script, SDK or dependency changes invalidate tests and prior arms.
 
-```powershell
-.\.venv\Scripts\python.exe -m quantlab.paper_cli readiness --batch model_3de7b630030340cd
-```
+All existing exact-account, live-quote, LMT/OPG, concentration, cash, liquidity,
+what-if pacing, stale-batch and replay guards remain. Authorization is consumed
+before reservation and wire calls. No LIVE fallback, catch-up, automatic retry
+after ambiguous submission, or funding from expected sales is permitted.
+Windows must remain logged in and TWS PAPER authenticated.
 
-Readiness performs fresh non-transmitting checks and writes
-`state/paper_checks/TOMORROW_PREOPEN_READINESS.json`. Every prerequisite has a
-PASS/FAIL result. Missing connection, config, tests, startup evidence, task or
-arm yields NOT READY. Changing source, configuration, scripts, SDK or dependency
-versions invalidates the test attestation and the arm. An expired or consumed
-batch cannot be armed again by this interface.
-
-## Autostart and safety
-
-Task `QuantResearch-PAPER-20260922` starts at 05:45 Vancouver with the logged-in
-Windows user's interactive token and limited privileges. It does not depend on
-an open terminal. It starts when available after a missed trigger, wakes the
-machine if Windows permits, rejects parallel instances and expires at 07:00;
-Windows deletes it one hour after expiry. The watcher exits after 06:35. Its
-05:45 trigger is not a trading permission: time checks still reject early/late
-orders. Windows must remain logged in and TWS PAPER authenticated. Credentials
-are never stored or automated here.
-
-`scripts/start_paper_bot.ps1` launches the repository virtualenv and writes
-timestamped startup/stdout/stderr logs under `state/private/logs/`. A launcher
-file lock and a separate watcher OS lock prevent duplicate processes. Nonzero
-startup failures are logged and propagated.
-
-The watcher uses only the specified armed batch, checks connectivity repeatedly,
-reconciles before action, obtains fresh live quotes and qualified contracts,
-sizes target-minus-current-position deltas, validates a dry run and obtains
-every exact IBKR what-if preview with the frozen 61-second pacing. It requires
-enough remaining time for the previews; it does not relax pacing or the window.
-
-Authorization is consumed durably before batch reservation and before any
-actual wire call. Source/config, account and timing checks also run at the wire
-boundary. A crash, rejected or ambiguous transmission can never cause automatic
-resending. After consumption the watcher only reconciles acknowledgements,
-executions and resulting positions. Expiry also disarms the batch. Before any
-possible transmission, a fresh connection and complete reconciliation allow a
-safe retry of a transient connectivity/quote failure. LIVE accounts are rejected
-before connecting and at transmission.
-
-Official references: [IBKR API configuration and Read-Only API](https://www.interactivebrokers.com/campus/trading-lessons/installing-configuring-tws-for-the-api/)
-and [Windows StartWhenAvailable](https://learn.microsoft.com/en-us/windows/win32/taskschd/taskschedulerschema-startwhenavailable-settingstype-element).
+References: [NYSE 2026 calendar](https://www.nyse.com/publicdocs/nyse/ICE_NYSE_2026_Yearly_Trading_Calendar.pdf),
+[IBKR currency callback prefix](https://www.interactivebrokers.com/docs/tws-api/doc/tws-settings/per-currency-account-value-prefix),
+[IBKR what-if margin checks](https://interactivebrokers.github.io/tws-api/margin.html).
