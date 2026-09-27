@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "champion": "COMPETITION_V1 / ridge10",
+  "champion_version": "cbe43010220707651123",
+  "opened_intervals": [
+    {
+      "start": "2023-01-01",
+      "end": "2026-09-18",
+      "opened_at": "2026-09-21T22:05:31.372469+00:00",
+      "evidence": "state/research.sqlite events.working_model_holdout_opened and WORKING_MODEL_STATUS.md",
+      "permanent": true
+    }
+  ],
+  "historical_validation": "2018-2022 repeatedly reused; cannot become a sealed holdout",
+  "prior_ledger_at_v2_start": {"runs": 7, "trial_rows": 387, "complete": 378, "failed": 3, "not_run": 6},
+  "count_caveat": "Rows include partitions, ablations, repeats and baselines; not 387 independent strategies. Unlogged researcher degrees of freedom are unknown."
+}
