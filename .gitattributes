@@ -6,6 +6,6 @@ config/rigorous_v2.json text eol=lf
 config/research_history.json text eol=lf
 # These generated JSON files have byte hashes in the ledger. Preserve their
 # exact bytes on every platform rather than applying checkout conversion.
-config/v2_attribution_groups.json -text
-research/*.json -text
+config/v2_attribution_groups.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+research/*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 research/*.jsonl text eol=lf
